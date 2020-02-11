@@ -5,6 +5,14 @@
 # $2 = release version
 #
 # Example: release myRelease 1.0.0
-git checkout -b build-test/release/$1
 jq --arg v "$2" '.version = $v' ../config.json > config.tmp.json && mv config.tmp.json ../config.json
+git add --all
+git commit -m "Release $1 $2"
+git checkout -b build-test/release/$1
 git push -u origin build-test/release/$1
+git checkout build-test/develop
+version="$(semver -i $2)"
+jq --arg v "$version" '.version = $v' ../config.json > config.tmp.json && mv config.tmp.json ../config.json
+git add --all
+git commit -m "Setting develop version to $version"
+git push
