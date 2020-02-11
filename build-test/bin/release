@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# Release script that creates a release branch and modifies the version
+# $1 = release name
+# $2 = release version
+#
+# Example: release myRelease 1.0.0
+git checkout -b build-test/release/$1
+jq --arg v "$2" '.version = $v' ../config.json > config.tmp.json && mv config.tmp.json ../config.json
+git push -u origin build-test/release/$1
