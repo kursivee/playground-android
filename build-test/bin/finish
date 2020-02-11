@@ -7,6 +7,7 @@
 branch=$(git branch | sed -n '/\* /s///p')
 git checkout master
 git merge $branch
-version=$(cat ../config.json | jq ".version")
+version=$(cat ../config.json | jq ".version" | tr -d '"')
 git commit -m "Finish release $version" --allow-empty
-git push
+git tag -a release-$version -m ""
+git push --follow-tags
