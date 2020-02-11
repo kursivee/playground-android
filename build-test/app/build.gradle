@@ -5,6 +5,14 @@ apply plugin: 'androidx.navigation.safeargs'
 
 import groovy.json.JsonSlurper
 def config = new JsonSlurper().parseText(project.file('../config.json').text)
+def getGitHash = { ->
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'rev-parse', '--short', 'HEAD'
+        standardOutput = stdout
+    }
+    return stdout.toString().trim()
+}
 
 android {
     compileSdkVersion 29
@@ -15,6 +23,8 @@ android {
         targetSdkVersion 29
         versionCode 1
         versionName config.version
+
+        buildConfigField "String", "COMMIT_HASH", "\"${getGitHash()}\""
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

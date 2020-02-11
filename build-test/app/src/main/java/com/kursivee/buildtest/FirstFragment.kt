@@ -30,7 +30,7 @@ class FirstFragment : Fragment() {
             findNavController().navigate(action)
         }
 
-        textview_first.text = BuildConfig.VERSION_NAME
+        textview_first.text = "${BuildConfig.VERSION_NAME} ${BuildConfig.COMMIT_HASH}"
 
     }
 }
