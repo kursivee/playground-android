@@ -1,0 +1,8 @@
+#!/bin/bash
+
+branch=$(git branch | sed -n '/\* /s///p')
+git checkout master
+git merge $branch
+version=$(cat ../config.json | jq ".version")
+git commit -m "Finish release $version" --allow-empty
+git push
