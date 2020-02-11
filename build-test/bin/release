@@ -5,6 +5,9 @@
 # $2 = release version
 #
 # Example: release myRelease 1.0.0
+#
+# Install jq "brew install jq"
+# Install semver "https://github.com/npm/node-semver/blob/master/bin/semver.js"
 jq --arg v "$2" '.version = $v' ../config.json > config.tmp.json && mv config.tmp.json ../config.json
 git add --all
 git commit -m "Release $1 $2"
