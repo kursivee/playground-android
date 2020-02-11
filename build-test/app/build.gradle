@@ -3,6 +3,9 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'androidx.navigation.safeargs'
 
+import groovy.json.JsonSlurper
+def config = new JsonSlurper().parseText(project.file('../config.json').text)
+
 android {
     compileSdkVersion 29
 
@@ -11,7 +14,7 @@ android {
         minSdkVersion 23
         targetSdkVersion 29
         versionCode 1
-        versionName "1.0"
+        versionName config.version
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
