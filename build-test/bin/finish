@@ -11,3 +11,6 @@ version=$(cat ../config.json | jq ".version" | tr -d '"')
 git commit -m "Finish release $version" --allow-empty
 git tag -a release-$version -m ""
 git push --follow-tags
+git checkout build-test/develop
+git merge master
+git push
