@@ -10,4 +10,5 @@
     <string name="bottom_logo">L O G O&#160;</string>
     <string name="biometrics">BIOMETRICS</string>
     <string name="logo_desc">Logo image</string>
+    <string name="remember_me">REMEMBER ME</string>
 </resources>
