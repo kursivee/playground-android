@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Material</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="forgot_credentials">Forgot Credentials?</string>
+    <string name="need_an_account">Need an account?</string>
+    <string name="register_now">Register Now</string>
+    <string name="top_logo">G E N E R I C</string>
+    <string name="bottom_logo">L O G O</string>
+    <string name="biometrics">BIOMETRICS</string>
+    <string name="logo_desc">Logo image</string>
 </resources>

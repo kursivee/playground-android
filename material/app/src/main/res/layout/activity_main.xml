@@ -3,7 +3,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent" android:id="@+id/cl_container">
 
     <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -12,66 +12,66 @@
             app:startIconDrawable="@android:drawable/ic_secure"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintBottom_toBottomOf="parent"
-            android:id="@+id/textInputLayout" android:layout_marginStart="24dp"
+            android:id="@+id/til_username" android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp" android:layout_marginBottom="20dp"
     >
 
         <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Username" android:singleLine="true"/>
+                android:hint="@string/username" android:singleLine="true" android:id="@+id/tiet_username"/>
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
+            android:layout_height="wrap_content" app:layout_constraintTop_toBottomOf="@+id/til_username"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             app:startIconDrawable="@android:drawable/ic_secure"
             android:layout_marginTop="8dp" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="24dp" android:layout_marginStart="24dp"
             app:endIconMode="password_toggle"
-            android:id="@+id/textInputLayout2">
+            android:id="@+id/til_password">
 
         <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:hint="Password"/>
+                android:hint="@string/password" android:id="@+id/tiet_password"/>
     </com.google.android.material.textfield.TextInputLayout>
     <Button
-            android:text="Login"
+            android:text="@string/login"
             android:layout_width="0dp"
-            android:layout_height="wrap_content" android:id="@+id/button4"
+            android:layout_height="wrap_content" android:id="@+id/btn_login"
             android:layout_marginTop="24dp"
-            app:layout_constraintTop_toBottomOf="@+id/checkBox" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cb_biometrics" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="48dp" app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="48dp"/>
     <TextView
-            android:text="Forgot Credentials?"
+            android:text="@string/forgot_credentials"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textView2"
+            android:id="@+id/tv_forgot"
             android:textColor="#0D47A1 "
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/button4"/>
+            app:layout_constraintTop_toBottomOf="@+id/btn_login"/>
     <TextView
-            android:text="Need an account? "
+            android:text="@string/need_an_account"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textView3"
+            android:id="@+id/tv_need"
             android:layout_marginBottom="24dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp" app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintEnd_toStartOf="@+id/textView4"
+            app:layout_constraintEnd_toStartOf="@+id/tv_register"
             app:layout_constraintHorizontal_chainStyle="packed"/>
     <TextView
-            android:text="Register Now"
+            android:text="@string/register_now"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textView4" app:layout_constraintStart_toEndOf="@+id/textView3"
+            android:id="@+id/tv_register" app:layout_constraintStart_toEndOf="@+id/tv_need"
             android:layout_marginBottom="24dp"
             app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintEnd_toEndOf="parent"
@@ -79,39 +79,40 @@
     <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="150dp"
             android:layout_height="150dp" app:srcCompat="@android:drawable/sym_def_app_icon"
+            android:contentDescription="@string/logo_desc"
             android:elevation="4dp"
-            android:id="@+id/imageView"
+            android:id="@+id/iv_logo"
             android:src="@drawable/image"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp" android:layout_marginTop="16dp"
             app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@tools:sample/backgrounds/scenic[16]" android:alpha=".7"
-            android:layout_marginBottom="8dp" app:layout_constraintBottom_toTopOf="@+id/textInputLayout"/>
+            android:layout_marginBottom="8dp" app:layout_constraintBottom_toTopOf="@+id/til_username"/>
     <TextView
-            android:text="G E N E R I C"
+            android:text="@string/top_logo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textView6" app:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/tv_logo_header_top" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
             android:textStyle="bold|italic" android:textSize="16sp" android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/imageView" android:fontFamily="monospace"/>
+            app:layout_constraintBottom_toTopOf="@+id/iv_logo" android:fontFamily="monospace"/>
     <TextView
-            android:text="L O G O "
+            android:text="@string/bottom_logo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textView7"
+            android:id="@+id/tv_logo_header_bottom"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
             android:textStyle="bold|italic" android:textSize="16sp"
             android:fontFamily="monospace"
-            app:layout_constraintTop_toBottomOf="@+id/imageView" android:layout_marginStart="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/iv_logo" android:layout_marginStart="8dp"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="8dp"/>
     <CheckBox
-            android:text="BIOMETRICS"
+            android:text="@string/biometrics"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/checkBox"
+            android:id="@+id/cb_biometrics"
             android:theme="@style/CheckboxFillColor"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout2" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/til_password" app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="24dp"
             android:textSize="12sp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
