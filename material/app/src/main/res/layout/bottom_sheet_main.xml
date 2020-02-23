@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools" android:id="@+id/ll_bottom_sheet"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              app:behavior_hideable="true"
+              android:orientation="vertical"
+              app:behavior_peekHeight="0dp"
+              android:clickable="true"
+              android:focusable="true"
+              app:layout_behavior="@string/bottom_sheet_behavior">
+
+
+    <TextView
+            android:text="Retrieve My Username"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginStart="8dp"
+            android:layout_height="wrap_content" android:id="@+id/textView2"
+            android:gravity="center" android:drawableStart="@android:drawable/ic_menu_my_calendar"
+            android:drawablePadding="8dp"/>
+    <TextView
+            android:text="Reset My Password"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginStart="8dp"
+            android:layout_height="wrap_content" android:id="@+id/textView"
+            android:gravity="center"
+            android:drawableStart="@android:drawable/ic_menu_view" android:drawablePadding="8dp"/>
+</LinearLayout>
