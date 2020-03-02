@@ -21,7 +21,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    flavorDimensions "version"
+    flavorDimensions "version", "api"
     productFlavors {
         demo {
             dimension "version"
@@ -33,10 +33,16 @@ android {
             applicationIdSuffix ".full"
             versionNameSuffix "-full"
         }
+        lower {
+            dimension "api"
+        }
+        prod {
+            dimension "api"
+        }
     }
     variantFilter { variant ->
         def name = variant.name
-        if(name == "demoRelease") {
+        if(name == "demoLowerRelease") {
             setIgnore(true)
         }
     }
