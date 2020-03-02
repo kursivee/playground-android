@@ -36,9 +36,6 @@ android {
         lower {
             dimension "api"
         }
-        prod {
-            dimension "api"
-        }
         custom {
             dimension "api"
         }
