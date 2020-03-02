@@ -39,10 +39,14 @@ android {
         prod {
             dimension "api"
         }
+        custom {
+            dimension "api"
+        }
     }
     variantFilter { variant ->
         def name = variant.name
-        if(name == "demoLowerRelease") {
+        def flavorName = variant.flavors*.name
+        if(name == "demoLowerRelease" || (flavorName.contains("custom") && name != "demoCustomRelease")) {
             setIgnore(true)
         }
     }
