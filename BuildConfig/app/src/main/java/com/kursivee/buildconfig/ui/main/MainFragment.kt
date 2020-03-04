@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.kursivee.buildconfig.R
+import timber.log.Timber
 
 class MainFragment : Fragment() {
 
@@ -24,6 +25,7 @@ class MainFragment : Fragment() {
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
+        Timber.plant()
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
         viewModel.testIfElseSecurityBuild()
