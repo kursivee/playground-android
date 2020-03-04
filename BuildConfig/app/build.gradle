@@ -20,6 +20,14 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        security {
+            postprocessing {
+                removeUnusedCode true
+                removeUnusedResources true
+                obfuscate false
+                optimizeCode true
+            }
+        }
     }
     flavorDimensions "version", "api"
     productFlavors {
@@ -47,6 +55,9 @@ android {
         def name = variant.name
         def flavorName = variant.flavors*.name
         if(name == "demoLowerRelease" || (flavorName.contains("custom") && name != "demoCustomRelease")) {
+            setIgnore(true)
+        }
+        if(flavorName.contains("security") && name.contains("demo")) {
             setIgnore(true)
         }
     }
