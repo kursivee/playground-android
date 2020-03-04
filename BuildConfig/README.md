@@ -27,6 +27,9 @@ Added Timber library to see what would happen when it goes through code shrinkin
 
 - No calls to Timber
     - APK analysis shows Timber code not included in the build
-- Timber.plant() only called
-    - Code shrinking only includes necessary files to support .plant()
-        - Other functions are removed (e.g. .w(), .d(), etc.)
+- `Timber.plant()` only called
+    - Code shrinking only includes necessary files to support `.plant()`
+        - Other functions are removed (e.g. `.w()`, `.d()`, etc.)
+- `Timber.plant()` and `Timber.d()` called
+    - Code shrinking only includes necessary files to support `.plant()` and `.d()`
+        - Other functions are removed (e.g. `.w()`, etc.)
