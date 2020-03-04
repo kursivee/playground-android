@@ -3,8 +3,11 @@
 Playground project for messing around with android build configurations.
 
 ## Articles
+### Optimization
 - https://developer.android.com/studio/build/shrink-code#optimization
 - https://jakewharton.com/blog/ (Look at the R8 stuff)
+### Build Variant/Flavor Setup
+- https://developer.android.com/studio/build/build-variants
 
 ## Findings
 
