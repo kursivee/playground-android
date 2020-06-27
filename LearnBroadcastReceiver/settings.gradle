@@ -1,0 +1,2 @@
+rootProject.name = "LearnBroadcastReceiver"
+include ':app'
