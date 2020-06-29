@@ -11,6 +11,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.kursivee.mvi.R
+import com.kursivee.mvi.common.EventObserver
 import com.kursivee.mvi.home.event.HomeSingleEvent
 import com.kursivee.mvi.home.event.HomeStateEvent
 import com.kursivee.mvi.home.state.HomeViewState
@@ -37,11 +38,7 @@ class HomeFragment : Fragment() {
         requireView().findViewById<Button>(R.id.btn_toast).initToast()
 
         viewModel.state.observe(viewLifecycleOwner, Observer { render(it) })
-        viewModel.event.observe(viewLifecycleOwner, Observer {
-            it.getContentIfNotHandled()?.let { effect ->
-                onEffect(effect)
-            }
-        })
+        viewModel.event.observe(viewLifecycleOwner, EventObserver { onEffect(it) })
     }
 
     private fun Button.init() {
