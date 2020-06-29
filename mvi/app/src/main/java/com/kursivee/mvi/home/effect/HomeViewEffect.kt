@@ -1,5 +1,6 @@
 package com.kursivee.mvi.home.effect
 
 sealed class HomeViewEffect {
-    object NavigateScreen
+    object NavigateScreen: HomeViewEffect()
+    data class ToastEffect(val message: String): HomeViewEffect()
 }
