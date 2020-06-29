@@ -30,7 +30,7 @@ class HomeViewModel constructor(
     private fun getMessage() {
         updateViewState { it.copy(message = "") }
         request(
-            useCase = { getMessageUseCase() },
+            useCase = getMessageUseCase,
             onSuccess = { event ->
                 updateViewState { it.copy(message = "${it.message} ${event.data.message}") }
             },

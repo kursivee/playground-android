@@ -15,4 +15,6 @@ abstract class FlowUseCase<S, E> {
         return flowOf(loadingFlow, *flows)
             .flattenMerge()
     }
+
+    abstract suspend operator fun invoke(): Flow<NetworkEvent<S, E>>
 }

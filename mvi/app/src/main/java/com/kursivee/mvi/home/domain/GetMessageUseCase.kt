@@ -10,9 +10,10 @@ import kotlinx.coroutines.flow.*
 
 @ExperimentalCoroutinesApi
 @FlowPreview
-class GetMessageUseCase(private val messageRepository: MessageRepository = MessageRepositoryImpl()): FlowUseCase<MessageEntity, ErrorEntity>() {
+class GetMessageUseCase(
+    private val messageRepository: MessageRepository = MessageRepositoryImpl()): FlowUseCase<MessageEntity, ErrorEntity>() {
 
-    suspend operator fun invoke(): Flow<NetworkEvent<MessageEntity, ErrorEntity>> {
+    override suspend operator fun invoke(): Flow<NetworkEvent<MessageEntity, ErrorEntity>> {
         return run(
             messageRepository.getMessage(),
             messageRepository.getMessage(),

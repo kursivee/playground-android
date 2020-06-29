@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kursivee.mvi.base.domain.event.NetworkEvent
+import com.kursivee.mvi.base.domain.usecase.FlowUseCase
 import com.kursivee.mvi.base.presentation.event.SingleEvent
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
@@ -32,7 +33,7 @@ abstract class BaseViewModel<ViewState, Event>(initialState: State<ViewState>): 
     }
 
     fun <S, E>request(
-        useCase: suspend () -> Flow<NetworkEvent<S, E>>,
+        useCase: FlowUseCase<S, E>,
         onSuccess: (NetworkEvent.Success<S>) -> Unit,
         onError: (NetworkEvent.Error<E>) -> Unit
     ) {
