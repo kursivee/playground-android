@@ -1,5 +1,6 @@
 package com.kursivee.mvi.home.presentation
 
+import androidx.lifecycle.viewModelScope
 import com.kursivee.mvi.base.presentation.framework.BaseViewModel
 import com.kursivee.mvi.base.presentation.framework.State
 import com.kursivee.mvi.home.domain.GetMessageUseCase
@@ -7,6 +8,7 @@ import com.kursivee.mvi.home.presentation.event.HomeEvent
 import com.kursivee.mvi.home.presentation.state.HomeViewState
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.cancel
 
 @FlowPreview
 @ExperimentalCoroutinesApi
@@ -34,9 +36,10 @@ class HomeViewModel constructor(
             onSuccess = { event ->
                 updateViewState { it.copy(message = "${it.message} ${event.data.message}") }
             },
-            onError = { event ->
+            onError = { event, scope ->
                 updateViewState { it.copy(message = "${it.message} ${event.error.error}") }
-            }
+            },
+            terminateOnError = true
         )
     }
 }

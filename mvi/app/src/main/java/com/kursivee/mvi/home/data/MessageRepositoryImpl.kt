@@ -19,4 +19,15 @@ class MessageRepositoryImpl: MessageRepository {
             }
         }
     }
+
+    override suspend fun getQuickMessage(): Flow<NetworkEvent<MessageEntity, ErrorEntity>> {
+        return flow {
+            delay(1000)
+            if((0..10).random() % 2 == 0) {
+                emit(NetworkEvent.Success(MessageEntity("HERE ${(0..100).random()}")))
+            } else {
+                emit(NetworkEvent.Error(ErrorEntity("ERROR")))
+            }
+        }
+    }
 }

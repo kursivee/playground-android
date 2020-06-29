@@ -6,4 +6,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface MessageRepository {
     suspend fun getMessage(): Flow<NetworkEvent<MessageEntity, ErrorEntity>>
+    suspend fun getQuickMessage(): Flow<NetworkEvent<MessageEntity, ErrorEntity>>
 }

@@ -15,10 +15,10 @@ class GetMessageUseCase(
 
     override suspend operator fun invoke(): Flow<NetworkEvent<MessageEntity, ErrorEntity>> {
         return run(
+            messageRepository.getQuickMessage(),
             messageRepository.getMessage(),
             messageRepository.getMessage(),
-            messageRepository.getMessage(),
-            messageRepository.getMessage()
+            messageRepository.getQuickMessage()
         )
     }
 }

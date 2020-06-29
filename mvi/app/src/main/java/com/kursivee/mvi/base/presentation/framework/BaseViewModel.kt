@@ -7,11 +7,12 @@ import androidx.lifecycle.viewModelScope
 import com.kursivee.mvi.base.domain.event.NetworkEvent
 import com.kursivee.mvi.base.domain.usecase.FlowUseCase
 import com.kursivee.mvi.base.presentation.event.SingleEvent
-import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
+import kotlin.coroutines.CoroutineContext
 
 @FlowPreview
+@ExperimentalCoroutinesApi
 abstract class BaseViewModel<ViewState, Event>(initialState: State<ViewState>): ViewModel() {
     private val _state: MutableLiveData<State<ViewState>> = MutableLiveData(initialState)
     val state: LiveData<State<ViewState>> = _state
@@ -36,15 +37,21 @@ abstract class BaseViewModel<ViewState, Event>(initialState: State<ViewState>): 
     fun <S, E>request(
         useCase: FlowUseCase<S, E>,
         onSuccess: (NetworkEvent.Success<S>) -> Unit,
-        onError: (NetworkEvent.Error<E>) -> Unit
+        onError: suspend (NetworkEvent.Error<E>, scope: CoroutineScope) -> Unit,
+        terminateOnError: Boolean = false
     ) {
         viewModelScope.launch {
             useCase().collect { event ->
                 when(event) {
                     is NetworkEvent.Loading -> updateBaseState { it.copy(loading = true) }
                     is NetworkEvent.Success -> onSuccess(event)
-                    is NetworkEvent.Error -> onError(event)
-                    is NetworkEvent.Completed -> updateBaseState { it.copy(loading = false) }
+                    is NetworkEvent.Error -> {
+                        onError(event, this)
+                        if(terminateOnError) coroutineContext.cancel()
+                    }
+                    is NetworkEvent.Completed -> updateBaseState {
+                        it.copy(loading = false)
+                    }
                 }
             }
         }
