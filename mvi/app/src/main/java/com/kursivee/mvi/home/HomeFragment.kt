@@ -34,7 +34,7 @@ class HomeFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
         tvText = requireView().findViewById(R.id.tv_text)
         requireView().findViewById<Button>(R.id.btn_button).init()
-        requireView().findViewById<Button>(R.id.btn_effect).initEffect()
+        requireView().findViewById<Button>(R.id.btn_toast).initToast()
 
         viewModel.state.observe(viewLifecycleOwner, Observer { render(it) })
         viewModel.event.observe(viewLifecycleOwner, Observer {
@@ -50,9 +50,9 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun Button.initEffect() {
+    private fun Button.initToast() {
         setOnClickListener {
-            viewModel.process(HomeSingleEvent.ToastEffect(tvText.text.toString()))
+            viewModel.process(HomeSingleEvent.ToastEvent(tvText.text.toString()))
         }
     }
 
@@ -62,7 +62,7 @@ class HomeFragment : Fragment() {
 
     private fun onEffect(effect: HomeSingleEvent) {
         when(effect) {
-            is HomeSingleEvent.ToastEffect -> {
+            is HomeSingleEvent.ToastEvent -> {
                 Toast.makeText(context, effect.message, Toast.LENGTH_SHORT).show()
             }
         }
