@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import com.kursivee.mvi.R
@@ -47,6 +48,11 @@ class HomeFragment : BaseFragment<HomeState, HomeEvent, HomeViewModel>() {
 
     override fun onStateUpdate(state: HomeState) {
         tvText.text = state.message
+        if(state.loading) {
+            requireActivity().findViewById<ProgressBar>(R.id.progressBar).visibility = View.VISIBLE
+        } else {
+            requireActivity().findViewById<ProgressBar>(R.id.progressBar).visibility = View.INVISIBLE
+        }
     }
 
     override fun onSingleEvent(event: HomeEvent) {
