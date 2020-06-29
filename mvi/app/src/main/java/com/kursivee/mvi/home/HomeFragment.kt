@@ -2,28 +2,24 @@ package com.kursivee.mvi.home
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import androidx.lifecycle.Observer
 import com.kursivee.mvi.R
-import com.kursivee.mvi.common.EventObserver
-import com.kursivee.mvi.home.event.HomeSingleEvent
-import com.kursivee.mvi.home.event.HomeStateEvent
-import com.kursivee.mvi.home.state.HomeViewState
+import com.kursivee.mvi.common.ui.BaseFragment
+import com.kursivee.mvi.home.event.HomeEvent
+import com.kursivee.mvi.home.state.HomeState
 
-class HomeFragment : Fragment() {
+class HomeFragment : BaseFragment<HomeState, HomeEvent, HomeViewModel>() {
 
-    companion object {
-        fun newInstance() = HomeFragment()
-    }
-
-    private lateinit var viewModel: HomeViewModel
     private lateinit var tvText: TextView
+
+    override val vm: HomeViewModel by lazy {
+        ViewModelProvider(this).get(HomeViewModel::class.java)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -32,36 +28,33 @@ class HomeFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
         tvText = requireView().findViewById(R.id.tv_text)
         requireView().findViewById<Button>(R.id.btn_button).init()
         requireView().findViewById<Button>(R.id.btn_toast).initToast()
-
-        viewModel.state.observe(viewLifecycleOwner, Observer { render(it) })
-        viewModel.event.observe(viewLifecycleOwner, EventObserver { onEffect(it) })
     }
 
     private fun Button.init() {
         setOnClickListener {
-            viewModel.process(HomeStateEvent.UpdateMessage("YUP"))
+            vm.process(HomeEvent.UpdateMessage("YUP"))
         }
     }
 
     private fun Button.initToast() {
         setOnClickListener {
-            viewModel.process(HomeSingleEvent.ToastEvent(tvText.text.toString()))
+            vm.process(HomeEvent.ToastEvent(tvText.text.toString()))
         }
     }
 
-    private fun render(state: HomeViewState) {
+    override fun onStateUpdate(state: HomeState) {
         tvText.text = state.message
     }
 
-    private fun onEffect(effect: HomeSingleEvent) {
-        when(effect) {
-            is HomeSingleEvent.ToastEvent -> {
-                Toast.makeText(context, effect.message, Toast.LENGTH_SHORT).show()
+    override fun onSingleEvent(event: HomeEvent) {
+        when(event) {
+            is HomeEvent.ToastEvent -> {
+                Toast.makeText(context, event.message, Toast.LENGTH_SHORT).show()
             }
+            else -> throw Exception("Unhandled event ${event::class.java.canonicalName}")
         }
     }
 }

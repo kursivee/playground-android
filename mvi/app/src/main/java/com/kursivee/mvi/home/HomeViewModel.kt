@@ -1,29 +1,19 @@
 package com.kursivee.mvi.home
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.kursivee.mvi.common.SingleEvent
-import com.kursivee.mvi.home.event.HomeSingleEvent
-import com.kursivee.mvi.home.event.HomeStateEvent
-import com.kursivee.mvi.home.state.HomeViewState
+import com.kursivee.mvi.common.ui.BaseViewModel
+import com.kursivee.mvi.home.event.HomeEvent
+import com.kursivee.mvi.home.state.HomeState
 
-class HomeViewModel : ViewModel() {
-    private val _state: MutableLiveData<HomeViewState> = MutableLiveData(HomeViewState("hello"))
-    val state: LiveData<HomeViewState> = _state
+class HomeViewModel : BaseViewModel<HomeState, HomeEvent>(HomeState("Hello")) {
 
-    private val _event: MutableLiveData<SingleEvent<HomeSingleEvent>>  = MutableLiveData()
-    val event: LiveData<SingleEvent<HomeSingleEvent>> = _event
-
-    fun process(event: HomeStateEvent) {
+    override fun process(event: HomeEvent) {
         when(event) {
-            is HomeStateEvent.UpdateMessage -> {
-                _state.value = state.value?.copy(message = event.message)
+            is HomeEvent.UpdateMessage -> {
+                updateState { it.copy(message = event.message) }
+            }
+            is HomeEvent.ToastEvent -> {
+                sendSingleEvent(event)
             }
         }
-    }
-
-    fun process(effect: HomeSingleEvent) {
-        _event.value = SingleEvent(effect)
     }
 }
