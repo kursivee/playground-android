@@ -4,7 +4,9 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.kursivee.mvi.base.presentation.event.EventObserver
+import kotlinx.coroutines.FlowPreview
 
+@FlowPreview
 abstract class BaseFragment<ViewState, Event, VM: BaseViewModel<ViewState, Event>>: Fragment() {
 
     protected abstract val vm: VM
