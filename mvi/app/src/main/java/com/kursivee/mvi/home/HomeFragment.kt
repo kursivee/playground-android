@@ -1,4 +1,4 @@
-package com.kursivee.mvi
+package com.kursivee.mvi.home
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -6,6 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.TextView
+import androidx.lifecycle.Observer
+import com.kursivee.mvi.R
+import com.kursivee.mvi.home.event.HomeViewEvent
+import com.kursivee.mvi.home.state.HomeViewState
 
 class HomeFragment : Fragment() {
 
@@ -14,6 +20,8 @@ class HomeFragment : Fragment() {
     }
 
     private lateinit var viewModel: HomeViewModel
+    private lateinit var tvText: TextView
+    private lateinit var btnButton: Button
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -23,7 +31,19 @@ class HomeFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
-        // TODO: Use the ViewModel
+        tvText = requireView().findViewById(R.id.tv_text)
+        requireView().findViewById<Button>(R.id.btn_button).init()
+
+        viewModel.state.observe(viewLifecycleOwner, Observer { render(it) })
     }
 
+    private fun Button.init() {
+        setOnClickListener {
+            viewModel.process(HomeViewEvent.UpdateMessage("YUP"))
+        }
+    }
+
+    private fun render(state: HomeViewState) {
+        tvText.text = state.message
+    }
 }
