@@ -2,7 +2,7 @@ package com.kursivee.mvi
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.kursivee.mvi.home.HomeFragment
+import com.kursivee.mvi.home.presentation.HomeFragment
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

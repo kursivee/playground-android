@@ -1,4 +1,4 @@
-package com.kursivee.mvi.common
+package com.kursivee.mvi.base.presentation.event
 
 /**
  * Used as a wrapper for data that is exposed via a LiveData that represents an event.

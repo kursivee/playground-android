@@ -1,11 +1,9 @@
-package com.kursivee.mvi.common.ui
+package com.kursivee.mvi.base.presentation.framework
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import com.kursivee.mvi.common.EventObserver
+import com.kursivee.mvi.base.presentation.event.EventObserver
 
 abstract class BaseFragment<State: BaseState, Event, VM: BaseViewModel<State, Event>>: Fragment() {
 
@@ -17,6 +15,11 @@ abstract class BaseFragment<State: BaseState, Event, VM: BaseViewModel<State, Ev
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         vm.state.observe(viewLifecycleOwner, Observer { onStateUpdate(it) })
-        vm.event.observe(viewLifecycleOwner, EventObserver { onSingleEvent(it) })
+        vm.event.observe(viewLifecycleOwner,
+            EventObserver {
+                onSingleEvent(
+                    it
+                )
+            })
     }
 }

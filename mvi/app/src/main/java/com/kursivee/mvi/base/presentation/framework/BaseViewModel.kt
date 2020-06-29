@@ -1,9 +1,9 @@
-package com.kursivee.mvi.common.ui
+package com.kursivee.mvi.base.presentation.framework
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.kursivee.mvi.common.SingleEvent
+import com.kursivee.mvi.base.presentation.event.SingleEvent
 
 abstract class BaseViewModel<State: BaseState, Event>(initialState: State): ViewModel() {
     private val _state: MutableLiveData<State> = MutableLiveData(initialState)
@@ -19,6 +19,7 @@ abstract class BaseViewModel<State: BaseState, Event>(initialState: State): View
     }
 
     protected fun sendSingleEvent(event: Event) {
-        _event.value = SingleEvent(event)
+        _event.value =
+            SingleEvent(event)
     }
 }

@@ -1,4 +1,4 @@
-package com.kursivee.mvi.home
+package com.kursivee.mvi.home.presentation
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -9,9 +9,9 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import com.kursivee.mvi.R
-import com.kursivee.mvi.common.ui.BaseFragment
-import com.kursivee.mvi.home.event.HomeEvent
-import com.kursivee.mvi.home.state.HomeState
+import com.kursivee.mvi.base.presentation.framework.BaseFragment
+import com.kursivee.mvi.home.presentation.event.HomeEvent
+import com.kursivee.mvi.home.presentation.state.HomeState
 
 class HomeFragment : BaseFragment<HomeState, HomeEvent, HomeViewModel>() {
 

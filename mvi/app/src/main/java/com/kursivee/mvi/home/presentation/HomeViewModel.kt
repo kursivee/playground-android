@@ -1,8 +1,8 @@
-package com.kursivee.mvi.home
+package com.kursivee.mvi.home.presentation
 
-import com.kursivee.mvi.common.ui.BaseViewModel
-import com.kursivee.mvi.home.event.HomeEvent
-import com.kursivee.mvi.home.state.HomeState
+import com.kursivee.mvi.base.presentation.framework.BaseViewModel
+import com.kursivee.mvi.home.presentation.event.HomeEvent
+import com.kursivee.mvi.home.presentation.state.HomeState
 
 class HomeViewModel : BaseViewModel<HomeState, HomeEvent>(HomeState("Hello")) {
 

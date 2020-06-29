@@ -1,4 +1,4 @@
-package com.kursivee.mvi.common
+package com.kursivee.mvi.base.presentation.event
 
 import androidx.lifecycle.Observer
 
