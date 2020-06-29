@@ -11,8 +11,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.kursivee.mvi.R
-import com.kursivee.mvi.home.effect.HomeViewEffect
-import com.kursivee.mvi.home.event.HomeViewEvent
+import com.kursivee.mvi.home.event.HomeSingleEvent
+import com.kursivee.mvi.home.event.HomeStateEvent
 import com.kursivee.mvi.home.state.HomeViewState
 
 class HomeFragment : Fragment() {
@@ -37,7 +37,7 @@ class HomeFragment : Fragment() {
         requireView().findViewById<Button>(R.id.btn_effect).initEffect()
 
         viewModel.state.observe(viewLifecycleOwner, Observer { render(it) })
-        viewModel.effect.observe(viewLifecycleOwner, Observer {
+        viewModel.event.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let { effect ->
                 onEffect(effect)
             }
@@ -46,13 +46,13 @@ class HomeFragment : Fragment() {
 
     private fun Button.init() {
         setOnClickListener {
-            viewModel.process(HomeViewEvent.UpdateMessage("YUP"))
+            viewModel.process(HomeStateEvent.UpdateMessage("YUP"))
         }
     }
 
     private fun Button.initEffect() {
         setOnClickListener {
-            viewModel.process(HomeViewEffect.ToastEffect(tvText.text.toString()))
+            viewModel.process(HomeSingleEvent.ToastEffect(tvText.text.toString()))
         }
     }
 
@@ -60,9 +60,9 @@ class HomeFragment : Fragment() {
         tvText.text = state.message
     }
 
-    private fun onEffect(effect: HomeViewEffect) {
+    private fun onEffect(effect: HomeSingleEvent) {
         when(effect) {
-            is HomeViewEffect.ToastEffect -> {
+            is HomeSingleEvent.ToastEffect -> {
                 Toast.makeText(context, effect.message, Toast.LENGTH_SHORT).show()
             }
         }
