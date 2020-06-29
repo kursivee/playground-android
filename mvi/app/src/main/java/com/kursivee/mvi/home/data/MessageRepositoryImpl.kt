@@ -11,17 +11,11 @@ import kotlinx.coroutines.flow.flow
 class MessageRepositoryImpl: MessageRepository {
     override suspend fun getMessage(): Flow<NetworkEvent<MessageEntity, ErrorEntity>> {
         return flow {
-            emit(NetworkEvent.Loading)
-            delay(2000)
+            delay(((0..5000).random()+ 1000).toLong())
             if((0..10).random() % 2 == 0) {
-                emit(NetworkEvent.Success(MessageEntity("YO")))
+                emit(NetworkEvent.Success(MessageEntity("SUCCESS ${(0..100).random()}")))
             } else {
-                emit(
-                    NetworkEvent.Error(
-                    ErrorEntity(
-                        "ERROR"
-                    )
-                ))
+                emit(NetworkEvent.Error(ErrorEntity("ERROR")))
             }
         }
     }

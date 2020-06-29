@@ -5,11 +5,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.kursivee.mvi.base.presentation.event.EventObserver
 
-abstract class BaseFragment<State: BaseState, Event, VM: BaseViewModel<State, Event>>: Fragment() {
+abstract class BaseFragment<ViewState, Event, VM: BaseViewModel<ViewState, Event>>: Fragment() {
 
     protected abstract val vm: VM
 
-    protected abstract fun onStateUpdate(state: State)
+    protected abstract fun onStateUpdate(state: State<ViewState>)
     protected abstract fun onSingleEvent(event: Event)
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

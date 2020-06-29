@@ -1,17 +1,20 @@
 package com.kursivee.mvi.home.presentation
 
-import androidx.lifecycle.viewModelScope
-import com.kursivee.mvi.base.domain.event.NetworkEvent
 import com.kursivee.mvi.base.presentation.framework.BaseViewModel
+import com.kursivee.mvi.base.presentation.framework.State
 import com.kursivee.mvi.home.domain.GetMessageUseCase
 import com.kursivee.mvi.home.presentation.event.HomeEvent
-import com.kursivee.mvi.home.presentation.state.HomeState
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
+import com.kursivee.mvi.home.presentation.state.HomeViewState
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 
-class HomeViewModel(
+@FlowPreview
+@ExperimentalCoroutinesApi
+class HomeViewModel constructor(
     private val getMessageUseCase: GetMessageUseCase = GetMessageUseCase()
-) : BaseViewModel<HomeState, HomeEvent>(HomeState("Hello")) {
+) : BaseViewModel<HomeViewState, HomeEvent>(
+    State(loading = false, view = HomeViewState("Hello"))
+) {
 
     override fun process(event: HomeEvent) {
         when(event) {
@@ -25,20 +28,15 @@ class HomeViewModel(
     }
 
     private fun getMessage() {
-        viewModelScope.launch {
-            getMessageUseCase().collect { event ->
-                when(event) {
-                    is NetworkEvent.Loading -> {
-                        updateState { it.copy(loading = true) }
-                    }
-                    is NetworkEvent.Success -> {
-                        updateState { it.copy(message = event.data.message, loading = false) }
-                    }
-                    is NetworkEvent.Error -> {
-                        updateState { it.copy(message = event.error.error, loading = false) }
-                    }
-                }
+        updateViewState { it.copy(message = "") }
+        request(
+            useCase = { getMessageUseCase() },
+            onSuccess = { event ->
+                updateViewState { it.copy(message = "${it.message} ${event.data.message}") }
+            },
+            onError = { event ->
+                updateViewState { it.copy(message = "${it.message} ${event.error.error}") }
             }
-        }
+        )
     }
 }

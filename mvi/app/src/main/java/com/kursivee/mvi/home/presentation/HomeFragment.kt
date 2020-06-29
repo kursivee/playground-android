@@ -11,10 +11,15 @@ import android.widget.TextView
 import android.widget.Toast
 import com.kursivee.mvi.R
 import com.kursivee.mvi.base.presentation.framework.BaseFragment
+import com.kursivee.mvi.base.presentation.framework.State
 import com.kursivee.mvi.home.presentation.event.HomeEvent
-import com.kursivee.mvi.home.presentation.state.HomeState
+import com.kursivee.mvi.home.presentation.state.HomeViewState
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 
-class HomeFragment : BaseFragment<HomeState, HomeEvent, HomeViewModel>() {
+@FlowPreview
+@ExperimentalCoroutinesApi
+class HomeFragment : BaseFragment<HomeViewState, HomeEvent, HomeViewModel>() {
 
     private lateinit var tvText: TextView
 
@@ -46,8 +51,8 @@ class HomeFragment : BaseFragment<HomeState, HomeEvent, HomeViewModel>() {
         }
     }
 
-    override fun onStateUpdate(state: HomeState) {
-        tvText.text = state.message
+    override fun onStateUpdate(state: State<HomeViewState>) {
+        tvText.text = state.view.message
         if(state.loading) {
             requireActivity().findViewById<ProgressBar>(R.id.progressBar).visibility = View.VISIBLE
         } else {
