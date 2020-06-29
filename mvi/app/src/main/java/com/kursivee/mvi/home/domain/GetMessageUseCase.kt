@@ -19,8 +19,6 @@ class GetMessageUseCase(
             messageRepository.getMessage(),
             messageRepository.getMessage(),
             messageRepository.getMessage()
-        ).onCompletion {
-            emit(NetworkEvent.Completed)
-        }
+        )
     }
 }
