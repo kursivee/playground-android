@@ -6,6 +6,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.TextView
+import androidx.lifecycle.Observer
 import com.kursivee.graphql.R
 
 class MainFragment : Fragment() {
@@ -15,6 +18,9 @@ class MainFragment : Fragment() {
     }
 
     private lateinit var viewModel: MainViewModel
+    val tvMessage: TextView by lazy {
+        view!!.findViewById<TextView>(R.id.tv_message)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -24,7 +30,19 @@ class MainFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        viewModel.getUsers()
+
+        with(view!!) {
+            findViewById<Button>(R.id.btn_memcache)?.setOnClickListener {
+                viewModel.getUsersAndMemCache()
+            }
+            findViewById<Button>(R.id.btn_logout)?.setOnClickListener {
+                viewModel.logout()
+            }
+        }
+
+        viewModel.data.observe(viewLifecycleOwner, Observer {
+            tvMessage.text = it
+        })
     }
 
 }

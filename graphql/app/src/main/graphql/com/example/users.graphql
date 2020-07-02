@@ -4,3 +4,10 @@ query AllUsers {
     name
   }
 }
+
+query GetUser($id: ID!) {
+  User(id: $id) {
+    id
+    name
+  }
+}
