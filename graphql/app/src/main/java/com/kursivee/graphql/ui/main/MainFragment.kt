@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.kursivee.graphql.R
 
@@ -38,10 +39,23 @@ class MainFragment : Fragment() {
             findViewById<Button>(R.id.btn_logout)?.setOnClickListener {
                 viewModel.logout()
             }
+            findViewById<Button>(R.id.btn_book)?.setOnClickListener {
+                viewModel.loginAndBookTrip()
+            }
+            findViewById<Button>(R.id.btn_subscribe)?.setOnClickListener {
+                viewModel.subscribe()
+            }
+            findViewById<Button>(R.id.btn_login)?.setOnClickListener {
+                viewModel.login()
+            }
         }
 
         viewModel.data.observe(viewLifecycleOwner, Observer {
             tvMessage.text = it
+        })
+
+        viewModel.subscription.observe(viewLifecycleOwner, Observer {
+            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
         })
     }
 

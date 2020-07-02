@@ -32,6 +32,17 @@ android {
     }
 }
 
+apollo {
+    service("heroku") {
+        sourceFolder.set("com/heroku")
+        rootPackageName.set("com.heroku")
+    }
+    service("example") {
+        sourceFolder.set("com/example")
+        rootPackageName.set("com.example")
+    }
+}
+
 dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"

@@ -1,0 +1,13 @@
+mutation Login($email: String) {
+    login(email: $email)
+}
+
+mutation BookTrips($launchIds:[ID]!){
+    bookTrips(launchIds: $launchIds){
+        message
+    }
+}
+
+subscription Subscribe {
+    tripsBooked
+}
