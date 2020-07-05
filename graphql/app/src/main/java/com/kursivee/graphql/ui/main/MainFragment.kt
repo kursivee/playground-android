@@ -10,9 +10,13 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.kursivee.graphql.R
+import com.kursivee.graphql.di.Scope
 import com.kursivee.graphql.main.presentation.MainActivity
 import com.kursivee.graphql.main.presentation.SessionViewModel
+import org.koin.android.ext.android.getKoin
 import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.android.viewmodel.scope.viewModel
+import org.koin.core.qualifier.named
 
 class MainFragment : Fragment() {
 
@@ -20,10 +24,9 @@ class MainFragment : Fragment() {
         fun newInstance() = MainFragment()
     }
 
-    val vm: MainViewModel by viewModel()
-    private val sessionViewModel: SessionViewModel by lazy {
-        (requireActivity() as MainActivity).vm
-    }
+    private val scope = getKoin().getOrCreateScope(Scope.SESSION_SCOPE.name, named(Scope.SESSION_SCOPE))
+    private val vm: MainViewModel by scope.viewModel(this)
+    private val sessionViewModel: SessionViewModel by scope.viewModel(this)
 
     val tvMessage: TextView by lazy {
         view!!.findViewById<TextView>(R.id.tv_message)

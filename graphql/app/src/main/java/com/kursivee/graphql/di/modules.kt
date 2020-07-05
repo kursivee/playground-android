@@ -4,6 +4,7 @@ import com.kursivee.graphql.auth.data.LoginDataSource
 import com.kursivee.graphql.auth.data.LoginRepositoryImpl
 import com.kursivee.graphql.auth.domain.LoginRepository
 import com.kursivee.graphql.auth.domain.LoginUseCase
+import com.kursivee.graphql.auth.presentation.LoginViewModel
 import com.kursivee.graphql.base.cache.data.SessionRepositoryImpl
 import com.kursivee.graphql.base.cache.data.UserDataSource
 import com.kursivee.graphql.base.cache.domain.ClearSessionUseCase
@@ -25,31 +26,40 @@ import com.kursivee.graphql.ui.main.MainViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import org.koin.android.viewmodel.dsl.viewModel
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
+
+enum class Scope {
+    SESSION_SCOPE
+}
 
 @FlowPreview
 @ExperimentalCoroutinesApi
 val appModules = module {
-    viewModel { HomeViewModel() }
-    viewModel { SessionViewModel(get(), get()) }
-    viewModel { MainViewModel(get(), get(), get()) }
-    single { SubscribeTripCountUseCase(get()) }
-    single<TripsRepository> { TripsRepositoryImpl(get(), get()) }
-    single { TripsInMemDataSource() }
-    single { TripsDataSource(get()) }
+    scope(named(Scope.SESSION_SCOPE)) {
+        viewModel { HomeViewModel() }
+        viewModel { SessionViewModel(get(), get()) }
+        viewModel { MainViewModel(get(), get(), get()) }
+        scoped { SubscribeTripCountUseCase(get()) }
+        scoped<TripsRepository> { TripsRepositoryImpl(get(), get()) }
+        scoped { TripsInMemDataSource() }
+        scoped { TripsDataSource(get()) }
+        scoped { BookTripsUseCase(get()) }
+        scoped { ObserveTripCountUseCase(get()) }        
+    }
+    
     single { LoginUseCase(get(), get()) }
+    single { LoginViewModel(get()) }
     single { LoginDataSource(get()) }
     single<LoginRepository> { LoginRepositoryImpl(get()) }
-    single { BookTripsUseCase(get()) }
-    single { ObserveTripCountUseCase(get()) }
 }
 
 val baseModules = module {
     single<SessionRepository> { SessionRepositoryImpl(get()) }
-    single { UserDataSource() }
     single { GetUserUseCase(get()) }
-    single { SetUserUseCase(get()) }
     single { ClearSessionUseCase(get()) }
+    single { UserDataSource() }
+    single { SetUserUseCase(get()) }
     single { OkHttpClientFactory(get()).get() }
     single { ApolloClientFactory(get()).get() }
 }

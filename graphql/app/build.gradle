@@ -7,6 +7,10 @@ plugins {
 android {
     compileSdkVersion 29
 
+    buildFeatures {
+        viewBinding true
+    }
+
     defaultConfig {
         applicationId "com.kursivee.graphql"
         minSdkVersion 23
@@ -66,8 +70,11 @@ dependencies {
     implementation "com.squareup.okhttp3:okhttp:4.7.2"
 
     // koin
-
     implementation "org.koin:koin-core:$koin_version"
     implementation "org.koin:koin-android:$koin_version"
     implementation "org.koin:koin-android-viewmodel:$koin_version"
+
+    // Navigation
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 }
