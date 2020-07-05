@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -37,8 +38,12 @@ class LoginFragment : Fragment() {
 
     private fun LiveData<SingleEvent<Boolean>>.observe() {
         observe(viewLifecycleOwner, Observer {
-            it.getContentIfNotHandled()?.let {
-                findNavController().navigate(R.id.action_loginFragment_to_mainFragment)
+            it.getContentIfNotHandled()?.let { isSuccess ->
+                if(isSuccess) {
+                    findNavController().navigate(R.id.action_loginFragment_to_mainFragment)
+                } else {
+                    Toast.makeText(context, R.string.login_error_msg, Toast.LENGTH_SHORT).show()
+                }
             }
         })
     }
