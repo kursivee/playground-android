@@ -5,6 +5,21 @@ mutation Login($email: String) {
 mutation BookTrips($launchIds:[ID]!){
     bookTrips(launchIds: $launchIds){
         message
+        success
+        launches {
+            id
+            site
+            mission {
+                name
+                missionPatch
+            }
+            rocket {
+                id
+                name
+                type
+            }
+            isBooked
+        }
     }
 }
 

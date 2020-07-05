@@ -15,9 +15,20 @@ import com.example.GetUserQuery
 import com.heroku.BookTripsMutation
 import com.heroku.LoginMutation
 import com.heroku.SubscribeSubscription
+import com.kursivee.graphql.home.data.TripsDataSource
+import com.kursivee.graphql.home.data.TripsInMemDataSource
+import com.kursivee.graphql.home.data.TripsRepositoryImpl
+import com.kursivee.graphql.home.domain.entity.TripCountEntity
+import kotlinx.coroutines.channels.ConflatedBroadcastChannel
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
+import org.koin.ext.scope
+import kotlin.coroutines.coroutineContext
 
 class MainViewModel : ViewModel() {
 
@@ -35,7 +46,6 @@ class MainViewModel : ViewModel() {
     private val herokuClient: ApolloClient by lazy {
         ApolloClient.builder()
                 .serverUrl("https://apollo-fullstack-tutorial.herokuapp.com/")
-                .normalizedCache(memCache)
                 .subscriptionTransportFactory(
                         WebSocketSubscriptionTransport.Factory("wss://apollo-fullstack-tutorial.herokuapp.com/graphql", okHttpClient)
                 )
@@ -53,6 +63,9 @@ class MainViewModel : ViewModel() {
             }
             .build()
     }
+
+
+    private val repositoryImpl = TripsRepositoryImpl(TripsDataSource(herokuClient), TripsInMemDataSource())
 
 
     private val memCache: LruNormalizedCacheFactory =
@@ -75,17 +88,26 @@ class MainViewModel : ViewModel() {
 
     fun loginAndBookTrip() {
         viewModelScope.launch {
-            val bookResp = herokuClient.mutate(BookTripsMutation(mutableListOf("83"))).toDeferred().await()
-            data.value = bookResp.data?.bookTrips().toString()
+
+            data.value = repositoryImpl.bookTrips(listOf("83")).toString()
         }
+
     }
 
     fun subscribe() {
         viewModelScope.launch {
-            herokuClient.subscribe(SubscribeSubscription()).toFlow()
-                    .collect {
-                        subscription.value = "trips booked = ${count++ + it.data!!.tripsBooked()!!}"
-                    }
+            repositoryImpl.subscribeTripCount()
+//            herokuClient.subscribe(SubscribeSubscription()).toFlow()
+//                    .collect {
+//                        println("YO")
+//                        subscription.value = "trips booked = ${count++ + it.data!!.tripsBooked()!!}"
+//                    }
+
+        }
+        viewModelScope.launch {
+            repositoryImpl.getBookedTripsCount().collect {
+                subscription.value = "trips booked = ${it.count}"
+            }
         }
     }
 
