@@ -5,9 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.kursivee.graphql.R
 import com.kursivee.graphql.databinding.LoginFragmentBinding
+import com.kursivee.graphql.util.event.SingleEvent
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class LoginFragment : Fragment() {
@@ -28,8 +31,14 @@ class LoginFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         binding.btnLogin.setOnClickListener {
             vm.login(binding.etEmail.text.toString())
-            findNavController().navigate(R.id.action_loginFragment_to_mainFragment)
         }
+        vm.state.observe()
+    }
+
+    private fun LiveData<SingleEvent<Boolean>>.observe() {
+        observe(viewLifecycleOwner, Observer {
+            findNavController().navigate(R.id.action_loginFragment_to_mainFragment)
+        })
     }
 
     override fun onDestroyView() {

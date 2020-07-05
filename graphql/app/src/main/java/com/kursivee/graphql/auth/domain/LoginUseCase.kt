@@ -9,10 +9,11 @@ class LoginUseCase(
     private val loginRepository: LoginRepository,
     private val setUserUseCase: SetUserUseCase
 ) {
-    suspend operator fun invoke(email: String) {
-        withContext(Dispatchers.IO) {
+    suspend operator fun invoke(email: String): Boolean {
+        return withContext(Dispatchers.IO) {
             val entity = UserEntity(loginRepository.login(email).token)
             setUserUseCase(entity)
+            true
         }
     }
 }
