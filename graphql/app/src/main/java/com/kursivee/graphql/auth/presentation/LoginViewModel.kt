@@ -17,11 +17,7 @@ class LoginViewModel(
 
     fun login(email: String) {
         viewModelScope.launch {
-            if(loginUseCase(email).isRight()) {
-                mutableState.value = SingleEvent(true)
-            } else {
-                mutableState.value = SingleEvent(false)
-            }
+            mutableState.value = SingleEvent(loginUseCase(email).isRight())
         }
     }
 }
