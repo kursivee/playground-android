@@ -1,6 +1,5 @@
 package com.kursivee.graphql.ui.main
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -42,10 +41,11 @@ class MainFragment : Fragment() {
                 sessionViewModel.logout()
             }
             findViewById<Button>(R.id.btn_book)?.setOnClickListener {
-                vm.loginAndBookTrip()
+                vm.bookTrip()
             }
             findViewById<Button>(R.id.btn_subscribe)?.setOnClickListener {
                 sessionViewModel.subscribeOnTripCount()
+                vm.observeTripCount()
             }
             findViewById<Button>(R.id.btn_login)?.setOnClickListener {
                 vm.login()

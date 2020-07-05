@@ -8,7 +8,6 @@ class LoginRepositoryImpl(
 ): LoginRepository {
     override suspend fun login(email: String): AuthEntity {
         val token = loginDataSource.login(email).data?.login()!!
-        println(token)
         return AuthEntity(token)
     }
 }

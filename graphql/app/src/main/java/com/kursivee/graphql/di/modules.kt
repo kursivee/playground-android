@@ -16,6 +16,7 @@ import com.kursivee.graphql.home.data.TripsDataSource
 import com.kursivee.graphql.home.data.TripsInMemDataSource
 import com.kursivee.graphql.home.data.TripsRepositoryImpl
 import com.kursivee.graphql.home.domain.BookTripsUseCase
+import com.kursivee.graphql.home.domain.ObserveTripCountUseCase
 import com.kursivee.graphql.home.domain.SubscribeTripCountUseCase
 import com.kursivee.graphql.home.domain.TripsRepository
 import com.kursivee.graphql.home.presentation.HomeViewModel
@@ -31,7 +32,7 @@ import org.koin.dsl.module
 val appModules = module {
     viewModel { HomeViewModel() }
     viewModel { SessionViewModel(get(), get()) }
-    viewModel { MainViewModel(get(), get()) }
+    viewModel { MainViewModel(get(), get(), get()) }
     single { SubscribeTripCountUseCase(get()) }
     single<TripsRepository> { TripsRepositoryImpl(get(), get()) }
     single { TripsInMemDataSource() }
@@ -40,6 +41,7 @@ val appModules = module {
     single { LoginDataSource(get()) }
     single<LoginRepository> { LoginRepositoryImpl(get()) }
     single { BookTripsUseCase(get()) }
+    single { ObserveTripCountUseCase(get()) }
 }
 
 val baseModules = module {

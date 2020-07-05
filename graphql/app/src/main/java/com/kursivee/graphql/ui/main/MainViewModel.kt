@@ -22,6 +22,7 @@ import com.kursivee.graphql.home.data.TripsDataSource
 import com.kursivee.graphql.home.data.TripsInMemDataSource
 import com.kursivee.graphql.home.data.TripsRepositoryImpl
 import com.kursivee.graphql.home.domain.BookTripsUseCase
+import com.kursivee.graphql.home.domain.ObserveTripCountUseCase
 import com.kursivee.graphql.home.domain.entity.TripCountEntity
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.coroutineScope
@@ -36,17 +37,25 @@ import kotlin.coroutines.coroutineContext
 
 class MainViewModel(
     private val loginUseCase: LoginUseCase,
-    private val bookTripsUseCase: BookTripsUseCase
+    private val bookTripsUseCase: BookTripsUseCase,
+    private val observeTripCountUseCase: ObserveTripCountUseCase
 ) : ViewModel() {
 
     val data: MutableLiveData<String> = MutableLiveData()
     val subscription: MutableLiveData<String> = MutableLiveData()
 
-    fun loginAndBookTrip() {
+    fun bookTrip() {
         viewModelScope.launch {
             bookTripsUseCase(listOf("83"))
         }
+    }
 
+    fun observeTripCount() {
+        viewModelScope.launch {
+            observeTripCountUseCase().collect {
+                subscription.value = it.toString()
+            }
+        }
     }
 
     fun login() {
