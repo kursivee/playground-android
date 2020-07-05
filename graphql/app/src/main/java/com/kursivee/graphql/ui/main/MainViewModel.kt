@@ -15,9 +15,13 @@ import com.example.GetUserQuery
 import com.heroku.BookTripsMutation
 import com.heroku.LoginMutation
 import com.heroku.SubscribeSubscription
+import com.kursivee.graphql.auth.domain.LoginUseCase
+import com.kursivee.graphql.base.cache.domain.SetUserUseCase
+import com.kursivee.graphql.base.cache.domain.UserEntity
 import com.kursivee.graphql.home.data.TripsDataSource
 import com.kursivee.graphql.home.data.TripsInMemDataSource
 import com.kursivee.graphql.home.data.TripsRepositoryImpl
+import com.kursivee.graphql.home.domain.BookTripsUseCase
 import com.kursivee.graphql.home.domain.entity.TripCountEntity
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.coroutineScope
@@ -30,96 +34,24 @@ import okhttp3.OkHttpClient
 import org.koin.ext.scope
 import kotlin.coroutines.coroutineContext
 
-class MainViewModel : ViewModel() {
+class MainViewModel(
+    private val loginUseCase: LoginUseCase,
+    private val bookTripsUseCase: BookTripsUseCase
+) : ViewModel() {
 
     val data: MutableLiveData<String> = MutableLiveData()
     val subscription: MutableLiveData<String> = MutableLiveData()
 
-    private val client: ApolloClient by lazy {
-        ApolloClient.builder()
-                .serverUrl("https://api.graph.cool/simple/v1/ciyz901en4j590185wkmexyex")
-                .normalizedCache(memCache)
-                .okHttpClient(okHttpClient)
-                .build()
-    }
-
-    private val herokuClient: ApolloClient by lazy {
-        ApolloClient.builder()
-                .serverUrl("https://apollo-fullstack-tutorial.herokuapp.com/")
-                .subscriptionTransportFactory(
-                        WebSocketSubscriptionTransport.Factory("wss://apollo-fullstack-tutorial.herokuapp.com/graphql", okHttpClient)
-                )
-                .okHttpClient(okHttpClient)
-                .build()
-    }
-
-    private val okHttpClient: OkHttpClient by lazy {
-        OkHttpClient.Builder()
-            .addInterceptor {
-                val request = it.request().newBuilder()
-                    .addHeader("Authorization", token)
-                    .build()
-                it.proceed(request)
-            }
-            .build()
-    }
-
-
-    private val repositoryImpl = TripsRepositoryImpl(TripsDataSource(herokuClient), TripsInMemDataSource())
-
-
-    private val memCache: LruNormalizedCacheFactory =
-        LruNormalizedCacheFactory(EvictionPolicy.builder().maxSizeBytes(10 * 1024).build())
-
-    private var token: String = ""
-    private var count = 0
-
-    fun getUsersAndMemCache() {
-        viewModelScope.launch {
-           try {
-               val response = client.query(GetUserQuery("ck72wpgiy119w0166nlpn4lfg")).responseFetcher(CACHE_FIRST).toDeferred().await()
-               data.value = response.data!!.User().toString()
-            } catch (e: Exception) {
-                e.printStackTrace()
-                return@launch
-            }
-        }
-    }
-
     fun loginAndBookTrip() {
         viewModelScope.launch {
-
-            data.value = repositoryImpl.bookTrips(listOf("83")).toString()
+            bookTripsUseCase(listOf("83"))
         }
 
-    }
-
-    fun subscribe() {
-        viewModelScope.launch {
-            repositoryImpl.subscribeTripCount()
-//            herokuClient.subscribe(SubscribeSubscription()).toFlow()
-//                    .collect {
-//                        println("YO")
-//                        subscription.value = "trips booked = ${count++ + it.data!!.tripsBooked()!!}"
-//                    }
-
-        }
-        viewModelScope.launch {
-            repositoryImpl.getBookedTripsCount().collect {
-                subscription.value = "trips booked = ${it.count}"
-            }
-        }
     }
 
     fun login() {
         viewModelScope.launch {
-            val resp = herokuClient.mutate(LoginMutation(Input.fromNullable("a@g.com"))).toDeferred().await()
-            token = resp.data!!.login() ?: ""
+            loginUseCase("email@a.com")
         }
-    }
-
-    fun logout() {
-        client.apolloStore.normalizedCache().clearAll()
-        data.value = ""
     }
 }

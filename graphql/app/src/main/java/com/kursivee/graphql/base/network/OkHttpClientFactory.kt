@@ -21,6 +21,7 @@ class OkHttpClientFactory(
             val request = chain.request().newBuilder()
                 .addHeader(AUTHORIZATION_HEADER, getUserUseCase().token ?: "")
                 .build()
+            println("Token = ${getUserUseCase().token}")
             chain.proceed(request)
         }
     }

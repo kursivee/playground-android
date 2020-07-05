@@ -11,6 +11,9 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.kursivee.graphql.R
+import com.kursivee.graphql.main.presentation.MainActivity
+import com.kursivee.graphql.main.presentation.SessionViewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class MainFragment : Fragment() {
 
@@ -18,7 +21,11 @@ class MainFragment : Fragment() {
         fun newInstance() = MainFragment()
     }
 
-    private lateinit var viewModel: MainViewModel
+    val vm: MainViewModel by viewModel()
+    private val sessionViewModel: SessionViewModel by lazy {
+        (requireActivity() as MainActivity).vm
+    }
+
     val tvMessage: TextView by lazy {
         view!!.findViewById<TextView>(R.id.tv_message)
     }
@@ -30,31 +37,26 @@ class MainFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-
         with(view!!) {
-            findViewById<Button>(R.id.btn_memcache)?.setOnClickListener {
-                viewModel.getUsersAndMemCache()
-            }
             findViewById<Button>(R.id.btn_logout)?.setOnClickListener {
-                viewModel.logout()
+                sessionViewModel.logout()
             }
             findViewById<Button>(R.id.btn_book)?.setOnClickListener {
-                viewModel.loginAndBookTrip()
+                vm.loginAndBookTrip()
             }
             findViewById<Button>(R.id.btn_subscribe)?.setOnClickListener {
-                viewModel.subscribe()
+                sessionViewModel.subscribeOnTripCount()
             }
             findViewById<Button>(R.id.btn_login)?.setOnClickListener {
-                viewModel.login()
+                vm.login()
             }
         }
 
-        viewModel.data.observe(viewLifecycleOwner, Observer {
+        vm.data.observe(viewLifecycleOwner, Observer {
             tvMessage.text = it
         })
 
-        viewModel.subscription.observe(viewLifecycleOwner, Observer {
+        vm.subscription.observe(viewLifecycleOwner, Observer {
             Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
         })
     }
