@@ -37,7 +37,9 @@ class LoginFragment : Fragment() {
 
     private fun LiveData<SingleEvent<Boolean>>.observe() {
         observe(viewLifecycleOwner, Observer {
-            findNavController().navigate(R.id.action_loginFragment_to_mainFragment)
+            it.getContentIfNotHandled()?.let {
+                findNavController().navigate(R.id.action_loginFragment_to_mainFragment)
+            }
         })
     }
 
