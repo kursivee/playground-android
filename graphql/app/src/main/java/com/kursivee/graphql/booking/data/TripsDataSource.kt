@@ -1,15 +1,12 @@
-package com.kursivee.graphql.home.data
+package com.kursivee.graphql.booking.data
 
 import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.ApolloSubscriptionCall
 import com.apollographql.apollo.api.Response
 import com.apollographql.apollo.coroutines.toDeferred
 import com.apollographql.apollo.coroutines.toFlow
-import com.example.GetUserQuery
 import com.heroku.BookTripsMutation
 import com.heroku.SubscribeSubscription
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 
 class TripsDataSource(private val client: ApolloClient) {

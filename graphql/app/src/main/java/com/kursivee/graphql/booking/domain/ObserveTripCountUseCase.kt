@@ -1,6 +1,6 @@
-package com.kursivee.graphql.home.domain
+package com.kursivee.graphql.booking.domain
 
-import com.kursivee.graphql.home.domain.entity.TripCountEntity
+import com.kursivee.graphql.booking.domain.entity.TripCountEntity
 import kotlinx.coroutines.flow.Flow
 
 class ObserveTripCountUseCase(private val repository: TripsRepository) {

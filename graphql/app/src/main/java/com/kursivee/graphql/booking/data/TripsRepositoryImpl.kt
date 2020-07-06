@@ -1,18 +1,10 @@
-package com.kursivee.graphql.home.data
+package com.kursivee.graphql.booking.data
 
-import com.apollographql.apollo.coroutines.toFlow
-import com.kursivee.graphql.home.data.mapper.toEntity
-import com.kursivee.graphql.home.domain.TripsRepository
-import com.kursivee.graphql.home.domain.entity.*
+import com.kursivee.graphql.booking.data.mapper.toEntity
+import com.kursivee.graphql.booking.domain.TripsRepository
+import com.kursivee.graphql.booking.domain.entity.*
 import kotlinx.coroutines.*
-import kotlinx.coroutines.channels.ConflatedBroadcastChannel
-import kotlinx.coroutines.channels.consume
-import kotlinx.coroutines.channels.consumeEach
 import kotlinx.coroutines.flow.*
-import org.koin.ext.scope
-import kotlin.coroutines.coroutineContext
-import kotlin.properties.ObservableProperty
-import kotlin.reflect.KProperty
 
 @ExperimentalCoroutinesApi
 @FlowPreview

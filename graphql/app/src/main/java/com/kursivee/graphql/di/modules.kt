@@ -13,14 +13,14 @@ import com.kursivee.graphql.base.cache.domain.SessionRepository
 import com.kursivee.graphql.base.cache.domain.SetUserUseCase
 import com.kursivee.graphql.base.network.ApolloClientFactory
 import com.kursivee.graphql.base.network.OkHttpClientFactory
-import com.kursivee.graphql.home.data.TripsDataSource
-import com.kursivee.graphql.home.data.TripsInMemDataSource
-import com.kursivee.graphql.home.data.TripsRepositoryImpl
-import com.kursivee.graphql.home.domain.BookTripsUseCase
-import com.kursivee.graphql.home.domain.ObserveTripCountUseCase
-import com.kursivee.graphql.home.domain.SubscribeTripCountUseCase
-import com.kursivee.graphql.home.domain.TripsRepository
-import com.kursivee.graphql.home.presentation.HomeViewModel
+import com.kursivee.graphql.booking.data.TripsDataSource
+import com.kursivee.graphql.booking.data.TripsInMemDataSource
+import com.kursivee.graphql.booking.data.TripsRepositoryImpl
+import com.kursivee.graphql.booking.domain.BookTripsUseCase
+import com.kursivee.graphql.booking.domain.ObserveTripCountUseCase
+import com.kursivee.graphql.booking.domain.SubscribeTripCountUseCase
+import com.kursivee.graphql.booking.domain.TripsRepository
+import com.kursivee.graphql.booking.presentation.BookingViewModel
 import com.kursivee.graphql.main.presentation.SessionViewModel
 import com.kursivee.graphql.ui.main.MainViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -37,7 +37,7 @@ enum class Scope {
 @ExperimentalCoroutinesApi
 val appModules = module {
     scope(named(Scope.SESSION_SCOPE)) {
-        viewModel { HomeViewModel() }
+        viewModel { BookingViewModel() }
         viewModel { SessionViewModel(get(), get()) }
         viewModel { MainViewModel(get(), get(), get()) }
         scoped { SubscribeTripCountUseCase(get()) }

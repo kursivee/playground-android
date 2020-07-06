@@ -1,6 +1,4 @@
-package com.kursivee.graphql.home.domain
-
-import com.kursivee.graphql.home.domain.TripsRepository
+package com.kursivee.graphql.booking.domain
 
 class BookTripsUseCase(
     private val repository: TripsRepository

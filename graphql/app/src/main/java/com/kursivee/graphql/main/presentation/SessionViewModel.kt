@@ -3,7 +3,7 @@ package com.kursivee.graphql.main.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kursivee.graphql.base.cache.domain.ClearSessionUseCase
-import com.kursivee.graphql.home.domain.SubscribeTripCountUseCase
+import com.kursivee.graphql.booking.domain.SubscribeTripCountUseCase
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 

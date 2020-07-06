@@ -1,10 +1,10 @@
-package com.kursivee.graphql.home.data.mapper
+package com.kursivee.graphql.booking.data.mapper
 
 import com.heroku.BookTripsMutation
-import com.kursivee.graphql.home.domain.entity.LaunchEntity
-import com.kursivee.graphql.home.domain.entity.MissionEntity
-import com.kursivee.graphql.home.domain.entity.RocketEntity
-import com.kursivee.graphql.home.domain.entity.TripsEntity
+import com.kursivee.graphql.booking.domain.entity.LaunchEntity
+import com.kursivee.graphql.booking.domain.entity.MissionEntity
+import com.kursivee.graphql.booking.domain.entity.RocketEntity
+import com.kursivee.graphql.booking.domain.entity.TripsEntity
 
 fun BookTripsMutation.Mission.toEntity(): MissionEntity {
     return MissionEntity(

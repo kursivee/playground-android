@@ -1,13 +1,10 @@
-package com.kursivee.graphql.home.data
+package com.kursivee.graphql.booking.data
 
-import com.kursivee.graphql.home.domain.entity.TripCountEntity
+import com.kursivee.graphql.booking.domain.entity.TripCountEntity
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.flow.flow
-import kotlin.properties.ObservableProperty
-import kotlin.reflect.KProperty
 
 @ExperimentalCoroutinesApi
 @FlowPreview

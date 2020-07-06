@@ -1,4 +1,4 @@
-package com.kursivee.graphql.home.domain.entity
+package com.kursivee.graphql.booking.domain.entity
 
 data class TripsEntity(
     val success: Boolean,

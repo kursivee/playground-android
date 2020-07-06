@@ -1,4 +1,4 @@
-package com.kursivee.graphql.home.domain
+package com.kursivee.graphql.booking.domain
 
 class SubscribeTripCountUseCase(private val repository: TripsRepository) {
     suspend operator fun invoke() {
