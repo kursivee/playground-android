@@ -2,23 +2,46 @@ mutation Login($email: String) {
     login(email: $email)
 }
 
+fragment missionFragment on Mission {
+    name
+    missionPatch
+}
+
+fragment launchFragment on Launch {
+    id
+    site
+    mission {
+        ...missionFragment
+    }
+    rocket {
+        ...rocketFragment
+    }
+    isBooked
+}
+
+fragment rocketFragment on Rocket {
+    id
+    name
+    type
+}
+
 mutation BookTrips($launchIds:[ID]!){
     bookTrips(launchIds: $launchIds){
         message
         success
         launches {
-            id
-            site
-            mission {
-                name
-                missionPatch
-            }
-            rocket {
-                id
-                name
-                type
-            }
-            isBooked
+            ...launchFragment
+        }
+    }
+}
+
+query GetMe {
+    me {
+        id
+        email
+        profileImage
+        trips {
+            ...launchFragment
         }
     }
 }

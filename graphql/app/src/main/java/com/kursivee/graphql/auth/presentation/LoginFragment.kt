@@ -40,7 +40,7 @@ class LoginFragment : Fragment() {
         observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let { isSuccess ->
                 if(isSuccess) {
-                    findNavController().navigate(R.id.action_loginFragment_to_mainFragment)
+                    findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
                 } else {
                     Toast.makeText(context, R.string.login_error_msg, Toast.LENGTH_SHORT).show()
                 }

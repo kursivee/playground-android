@@ -11,6 +11,7 @@ import com.kursivee.graphql.base.cache.domain.ClearSessionUseCase
 import com.kursivee.graphql.base.cache.domain.GetUserUseCase
 import com.kursivee.graphql.base.cache.domain.SessionRepository
 import com.kursivee.graphql.base.cache.domain.SetUserUseCase
+import com.kursivee.graphql.base.koin.Scopes
 import com.kursivee.graphql.base.network.ApolloClientFactory
 import com.kursivee.graphql.base.network.OkHttpClientFactory
 import com.kursivee.graphql.booking.data.TripsDataSource
@@ -21,6 +22,11 @@ import com.kursivee.graphql.booking.domain.ObserveTripCountUseCase
 import com.kursivee.graphql.booking.domain.SubscribeTripCountUseCase
 import com.kursivee.graphql.booking.domain.TripsRepository
 import com.kursivee.graphql.booking.presentation.BookingViewModel
+import com.kursivee.graphql.home.data.datasource.MeDataSource
+import com.kursivee.graphql.home.data.repository.MeRepositoryImpl
+import com.kursivee.graphql.home.domain.repository.MeRepository
+import com.kursivee.graphql.home.domain.usecase.GetBookedTripsUseCase
+import com.kursivee.graphql.home.presentation.HomeViewModel
 import com.kursivee.graphql.main.presentation.SessionViewModel
 import com.kursivee.graphql.ui.main.MainViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -29,14 +35,10 @@ import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
-enum class Scope {
-    SESSION_SCOPE
-}
-
 @FlowPreview
 @ExperimentalCoroutinesApi
 val appModules = module {
-    scope(named(Scope.SESSION_SCOPE)) {
+    scope(named(Scopes.SESSION_SCOPE)) {
         viewModel { BookingViewModel() }
         viewModel { SessionViewModel(get(), get()) }
         viewModel { MainViewModel(get(), get(), get()) }
@@ -45,11 +47,18 @@ val appModules = module {
         scoped { TripsInMemDataSource() }
         scoped { TripsDataSource(get()) }
         scoped { BookTripsUseCase(get()) }
-        scoped { ObserveTripCountUseCase(get()) }        
+        scoped { ObserveTripCountUseCase(get()) }
+
+        // Home
+        scoped { GetBookedTripsUseCase(get()) }
+        scoped { MeRepositoryImpl(get()) as MeRepository }
+        scoped { MeDataSource(get()) }
+        viewModel { HomeViewModel(get()) }
+
     }
-    
+
+    viewModel { LoginViewModel(get()) }
     single { LoginUseCase(get(), get()) }
-    single { LoginViewModel(get()) }
     single { LoginDataSource(get()) }
     single<LoginRepository> { LoginRepositoryImpl(get()) }
 }
