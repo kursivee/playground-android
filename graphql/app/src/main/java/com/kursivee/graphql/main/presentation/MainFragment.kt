@@ -1,4 +1,4 @@
-package com.kursivee.graphql.ui.main
+package com.kursivee.graphql.main.presentation
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,15 +12,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.kursivee.graphql.R
-import com.kursivee.graphql.di.Scope
-import com.kursivee.graphql.main.presentation.SessionViewModel
+import com.kursivee.graphql.base.koin.sessionScope
 import org.koin.android.ext.android.getKoin
 import org.koin.android.viewmodel.scope.viewModel
-import org.koin.core.qualifier.named
 
 class MainFragment : Fragment() {
 
-    private val scope = getKoin().getOrCreateScope(Scope.SESSION_SCOPE.name, named(Scope.SESSION_SCOPE))
+    private val scope = getKoin().sessionScope
     private val vm: MainViewModel by scope.viewModel(this)
     private val sessionViewModel: SessionViewModel by scope.viewModel(this)
 

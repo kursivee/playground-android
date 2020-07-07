@@ -1,10 +1,10 @@
 package com.kursivee.graphql.di
 
-import com.kursivee.graphql.auth.data.LoginDataSource
-import com.kursivee.graphql.auth.data.LoginRepositoryImpl
-import com.kursivee.graphql.auth.domain.LoginRepository
-import com.kursivee.graphql.auth.domain.LoginUseCase
-import com.kursivee.graphql.auth.presentation.LoginViewModel
+import com.kursivee.graphql.login.data.LoginDataSource
+import com.kursivee.graphql.login.data.LoginRepositoryImpl
+import com.kursivee.graphql.login.domain.LoginRepository
+import com.kursivee.graphql.login.domain.LoginUseCase
+import com.kursivee.graphql.login.presentation.LoginViewModel
 import com.kursivee.graphql.base.cache.data.SessionRepositoryImpl
 import com.kursivee.graphql.base.cache.data.UserDataSource
 import com.kursivee.graphql.base.cache.domain.ClearSessionUseCase
@@ -28,7 +28,7 @@ import com.kursivee.graphql.home.domain.repository.MeRepository
 import com.kursivee.graphql.home.domain.usecase.GetBookedTripsUseCase
 import com.kursivee.graphql.home.presentation.HomeViewModel
 import com.kursivee.graphql.main.presentation.SessionViewModel
-import com.kursivee.graphql.ui.main.MainViewModel
+import com.kursivee.graphql.main.presentation.MainViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import org.koin.android.viewmodel.dsl.viewModel
@@ -41,7 +41,13 @@ val appModules = module {
     scope(named(Scopes.SESSION_SCOPE)) {
         viewModel { BookingViewModel() }
         viewModel { SessionViewModel(get(), get()) }
-        viewModel { MainViewModel(get(), get(), get()) }
+        viewModel {
+            MainViewModel(
+                get(),
+                get(),
+                get()
+            )
+        }
         scoped { SubscribeTripCountUseCase(get()) }
         scoped<TripsRepository> { TripsRepositoryImpl(get(), get()) }
         scoped { TripsInMemDataSource() }

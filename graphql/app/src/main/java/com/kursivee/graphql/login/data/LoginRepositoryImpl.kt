@@ -1,8 +1,8 @@
-package com.kursivee.graphql.auth.data
+package com.kursivee.graphql.login.data
 
 import arrow.core.Either
-import com.kursivee.graphql.auth.domain.AuthEntity
-import com.kursivee.graphql.auth.domain.LoginRepository
+import com.kursivee.graphql.login.domain.AuthEntity
+import com.kursivee.graphql.login.domain.LoginRepository
 import com.kursivee.graphql.base.network.ErrorCode
 import com.kursivee.graphql.base.network.ErrorEntity
 import com.kursivee.graphql.base.network.NetworkResponse

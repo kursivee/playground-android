@@ -1,9 +1,9 @@
-package com.kursivee.graphql.ui.main
+package com.kursivee.graphql.main.presentation
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kursivee.graphql.auth.domain.LoginUseCase
+import com.kursivee.graphql.login.domain.LoginUseCase
 import com.kursivee.graphql.booking.domain.BookTripsUseCase
 import com.kursivee.graphql.booking.domain.ObserveTripCountUseCase
 import kotlinx.coroutines.flow.collect

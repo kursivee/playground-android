@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:name=".MainApplication"
         android:theme="@style/Theme.Graphql">
-        <activity android:name=".main.presentation.MainActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

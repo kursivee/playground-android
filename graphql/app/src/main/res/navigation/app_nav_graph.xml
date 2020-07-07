@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.kursivee.graphql.auth.presentation.LoginFragment"
+        android:name="com.kursivee.graphql.login.presentation.LoginFragment"
         android:label="login_fragment"
         tools:layout="@layout/login_fragment" >
         <action
@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.kursivee.graphql.ui.main.MainFragment"
+        android:name="com.kursivee.graphql.main.presentation.MainFragment"
         android:label="main_fragment"
         tools:layout="@layout/main_fragment" >
         <action

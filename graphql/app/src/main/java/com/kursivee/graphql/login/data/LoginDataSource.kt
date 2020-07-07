@@ -1,4 +1,4 @@
-package com.kursivee.graphql.auth.data
+package com.kursivee.graphql.login.data
 
 import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.api.Input

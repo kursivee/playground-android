@@ -1,11 +1,11 @@
-package com.kursivee.graphql.auth.presentation
+package com.kursivee.graphql.login.presentation
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kursivee.graphql.auth.domain.LoginUseCase
-import com.kursivee.graphql.util.event.SingleEvent
+import com.kursivee.graphql.login.domain.LoginUseCase
+import com.kursivee.graphql.base.ui.event.SingleEvent
 import kotlinx.coroutines.launch
 
 class LoginViewModel(

@@ -1,4 +1,4 @@
-package com.kursivee.graphql.auth.domain
+package com.kursivee.graphql.login.domain
 
 import arrow.core.Either
 import com.kursivee.graphql.base.cache.domain.SetUserUseCase
