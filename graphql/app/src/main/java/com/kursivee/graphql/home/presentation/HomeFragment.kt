@@ -64,4 +64,9 @@ class HomeFragment : Fragment() {
         layoutManager = LinearLayoutManager(context)
         adapter = bookedTripsAdapter
     }
+
+    override fun onDestroyView() {
+        nullableBinding = null
+        super.onDestroyView()
+    }
 }
