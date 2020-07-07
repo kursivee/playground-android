@@ -10,6 +10,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.kursivee.graphql.R
+import com.kursivee.graphql.base.ui.event.EventObserver
 import com.kursivee.graphql.databinding.LoginFragmentBinding
 import com.kursivee.graphql.base.ui.event.SingleEvent
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -37,13 +38,11 @@ class LoginFragment : Fragment() {
     }
 
     private fun LiveData<SingleEvent<Boolean>>.observe() {
-        observe(viewLifecycleOwner, Observer {
-            it.getContentIfNotHandled()?.let { isSuccess ->
-                if(isSuccess) {
-                    findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
-                } else {
-                    Toast.makeText(context, R.string.login_error_msg, Toast.LENGTH_SHORT).show()
-                }
+        observe(viewLifecycleOwner, EventObserver { isSuccess ->
+            if(isSuccess) {
+                findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+            } else {
+                Toast.makeText(context, R.string.login_error_msg, Toast.LENGTH_SHORT).show()
             }
         })
     }
