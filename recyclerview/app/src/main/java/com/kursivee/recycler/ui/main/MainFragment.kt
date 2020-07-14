@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kursivee.recycler.databinding.MainFragmentBinding
 import com.kursivee.recycler.ui.main.adapter.HeaderAdapter
-import com.kursivee.recycler.ui.main.adapter.ListAdapter
+import com.kursivee.recycler.ui.main.adapter.ContentAdapter
 
 class MainFragment : Fragment() {
 
@@ -18,7 +18,7 @@ class MainFragment : Fragment() {
     }
 
     private val headerAdapter: HeaderAdapter = HeaderAdapter()
-    private val listAdapter: ListAdapter = ListAdapter(mutableListOf("What's", "Going", "On"))
+    private val contentAdapter: ContentAdapter = ContentAdapter()
 
     private var nullableBinding: MainFragmentBinding? = null
     private val binding: MainFragmentBinding
@@ -36,9 +36,10 @@ class MainFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         with(binding.rvItems) {
-            adapter = ConcatAdapter(headerAdapter, listAdapter)
+            adapter = ConcatAdapter(headerAdapter, contentAdapter)
             layoutManager = LinearLayoutManager(requireContext())
         }
+        contentAdapter.submitList(mutableListOf("What's", "Going", "On"))
     }
 
     override fun onDestroyView() {
