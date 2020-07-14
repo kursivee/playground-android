@@ -1,12 +1,15 @@
 package com.kursivee.recycler.ui.main
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.kursivee.recycler.R
+import androidx.recyclerview.widget.ConcatAdapter
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.kursivee.recycler.databinding.MainFragmentBinding
+import com.kursivee.recycler.ui.main.adapter.HeaderAdapter
+import com.kursivee.recycler.ui.main.adapter.ListAdapter
 
 class MainFragment : Fragment() {
 
@@ -14,17 +17,32 @@ class MainFragment : Fragment() {
         fun newInstance() = MainFragment()
     }
 
-    private lateinit var viewModel: MainViewModel
+    private val headerAdapter: HeaderAdapter = HeaderAdapter()
+    private val listAdapter: ListAdapter = ListAdapter(mutableListOf("What's", "Going", "On"))
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
-        return inflater.inflate(R.layout.main_fragment, container, false)
+    private var nullableBinding: MainFragmentBinding? = null
+    private val binding: MainFragmentBinding
+        get() = nullableBinding!!
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        nullableBinding = MainFragmentBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        // TODO: Use the ViewModel
+        with(binding.rvItems) {
+            adapter = ConcatAdapter(headerAdapter, listAdapter)
+            layoutManager = LinearLayoutManager(requireContext())
+        }
     }
 
+    override fun onDestroyView() {
+        nullableBinding = null
+        super.onDestroyView()
+    }
 }
