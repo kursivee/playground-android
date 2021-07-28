@@ -1,9 +1,6 @@
 package com.kursivee.roomtesting
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 
 @Dao
 interface UserDao {
@@ -17,9 +14,13 @@ interface UserDao {
     @Query("SELECT * FROM User")
     suspend fun getUsers(): List<User>
 
-    @Query("SELECT * FROM User WHERE id = :id")
+    @Query("SELECT * FROM User WHERE userId = :id")
     suspend fun findUserById(id: Int): User?
 
     @Delete
     suspend fun deleteUser(user: User)
+
+    @Transaction
+    @Query("SELECT * FROM User")
+    suspend fun getUsersWithAddress(): List<UserWithAddress>
 }
