@@ -5,7 +5,9 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity
+@Entity(
+    tableName = "NewUserTable"
+)
 data class User(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "userId")
