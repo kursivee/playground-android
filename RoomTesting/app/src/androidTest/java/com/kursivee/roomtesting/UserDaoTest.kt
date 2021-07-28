@@ -29,7 +29,6 @@ class UserDaoTest {
         addressDao = db.addressDao()
     }
 
-
     @Test
     fun createAndGetUsers_returnUsers() {
         val users = listOf(User(userId = 1, name = "foo"), User(userId = 2, "bar"))
@@ -65,6 +64,18 @@ class UserDaoTest {
             val users = userDao.getUsersWithAddress()
             val expected = UserWithAddress(user, address)
             assertThat(users, equalTo(listOf(expected)))
+        }
+    }
+
+    @Test
+    fun deleteUser_deletesAddress() {
+        val user = User(userId = 1, name = "foo")
+        val address = Address(addressId = 1, userId = 1, address = "1234 F", city = "foo", state = "bar")
+        runBlocking {
+            userDao.insertUser(user)
+            addressDao.insertAddress(address)
+            userDao.deleteUser(user)
+            assertThat(addressDao.findAddressById(1), equalTo(null))
         }
     }
 }
